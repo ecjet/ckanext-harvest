@@ -1,13 +1,15 @@
 import logging
 from sqlalchemy import or_
-from ckan.authz import Authorizer
+
+import ckan.plugins as p
+
 from ckan.model import User
 
 from ckan.plugins import PluginImplementations
 from ckanext.harvest.interfaces import IHarvester
 
 
-from ckan.logic import NotFound, check_access
+from ckan.logic import NotFound
 
 from ckanext.harvest.model import (HarvestSource, HarvestJob, HarvestObject)
 from ckanext.harvest.logic.dictization import (harvest_source_dictize,
@@ -17,7 +19,7 @@ from ckanext.harvest.logic.dictization import (harvest_source_dictize,
 log = logging.getLogger(__name__)
 
 def harvest_source_show(context,data_dict):
-    check_access('harvest_source_show',context,data_dict)
+    p.toolkit.check_access('harvest_source_show',context,data_dict)
 
     id = data_dict.get('id')
     attr = data_dict.get('attr',None)
@@ -31,7 +33,7 @@ def harvest_source_show(context,data_dict):
 
 def harvest_source_list(context, data_dict):
 
-    check_access('harvest_source_list',context,data_dict)
+    p.toolkit.check_access('harvest_source_list',context,data_dict)
 
     model = context['model']
     session = context['session']
@@ -64,7 +66,7 @@ def harvest_source_for_a_dataset(context, data_dict):
 
 def harvest_job_show(context,data_dict):
 
-    check_access('harvest_job_show',context,data_dict)
+    p.toolkit.check_access('harvest_job_show',context,data_dict)
 
     id = data_dict.get('id')
     attr = data_dict.get('attr',None)
@@ -77,7 +79,7 @@ def harvest_job_show(context,data_dict):
 
 def harvest_job_list(context,data_dict):
 
-    check_access('harvest_job_list',context,data_dict)
+    p.toolkit.check_access('harvest_job_list',context,data_dict)
 
     model = context['model']
     session = context['session']
@@ -99,7 +101,7 @@ def harvest_job_list(context,data_dict):
 
 def harvest_object_show(context,data_dict):
 
-    check_access('harvest_object_show',context,data_dict)
+    p.toolkit.check_access('harvest_object_show',context,data_dict)
 
     id = data_dict.get('id')
     attr = data_dict.get('attr',None)
@@ -111,7 +113,7 @@ def harvest_object_show(context,data_dict):
 
 def harvest_object_list(context,data_dict):
 
-    check_access('harvest_object_list',context,data_dict)
+    p.toolkit.check_access('harvest_object_list',context,data_dict)
 
     model = context['model']
     session = context['session']
@@ -133,7 +135,7 @@ def harvest_object_list(context,data_dict):
 
 def harvesters_info_show(context,data_dict):
 
-    check_access('harvesters_info_show',context,data_dict)
+    p.toolkit.check_access('harvesters_info_show',context,data_dict)
 
     available_harvesters = []
     for harvester in PluginImplementations(IHarvester):
